@@ -1,24 +1,288 @@
-<!DOCTYPE html>
-<html lang="">
-  
-<head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  
-  <body>
+<!--
+  portfolio.html
+  Un portfolio responsive listo para abrir en Visual Studio Code.
+  Instrucciones:
+    1) Guarda este archivo como `portfolio.html` en una carpeta nueva.
+    2) Abre la carpeta en VS Code.
+    3) (Opcional) Instala la extensión "Live Server" y pulsa "Go Live" para ver los cambios en tiempo real.
 
+  ¿Quieres que personalice nombre, proyectos o paleta de colores? Dime qué cambiar
+-->
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Portfolio — Tu Nombre</title>
+  <meta name="description" content="Portfolio de Tu Nombre — desarrollador/a web, diseñador/a, etc.">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent: #6ee7b7; /* verde suave */
+      --glass: rgba(255,255,255,0.04);
+      --radius: 14px;
+      --max-width: 1100px;
+      color-scheme: dark;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing: border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#061021 0%, #071428 60%);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      padding:32px 20px;
+      display:flex;
+      justify-content:center;
+      font-size:16px;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:28px;
+    }
+
+    .brand{
+      display:flex;gap:12px;align-items:center
+    }
+    .logo{
+      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#042029;box-shadow:0 6px 18px rgba(0,0,0,0.45)
+    }
+
+    nav a{color:var(--muted);text-decoration:none;margin-left:18px}
+    nav a:hover{color:var(--accent)}
+
+    .hero{
+      display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-bottom:32px
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .intro h1{margin:0 0 8px 0;font-size:28px}
+    .intro p{margin:0;color:var(--muted)}
+
+    .profile{
+      display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center
+    }
+    .avatar{
+      width:160px;height:160px;border-radius:20px;background:linear-gradient(180deg,#123 30%, #0a2336 100%);display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:var(--accent);
+      box-shadow: inset 0 -6px 20px rgba(0,0,0,0.6)
+    }
+
+    .stats{display:flex;gap:12px;justify-content:center;margin-top:6px}
+    .stat{background:var(--glass);padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+
+    /* Projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    .project{overflow:hidden;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01))}
+    .project img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+    .project h3{margin:0;font-size:16px}
+    .project p{margin:0;color:var(--muted);font-size:14px}
+    .project .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-size:13px;color:var(--muted)}
+
+    /* Skills + Contact */
+    .two-col{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-top:22px}
+    .skills{display:flex;gap:8px;flex-wrap:wrap}
+    .skill{background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:8px 10px;border-radius:999px;font-weight:600}
+
+    footer{text-align:center;color:var(--muted);margin-top:28px}
+
+    /* Responsiveness */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr 1fr}
+      .projects-grid{grid-template-columns:repeat(2,1fr)}
+      .two-col{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      body{padding:20px}
+      .hero{grid-template-columns:1fr;}
+      .projects-grid{grid-template-columns:1fr}
+      nav{display:none}
+      .logo{width:48px;height:48px}
+      .avatar{width:120px;height:120px}
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:none;cursor:pointer;font-weight:700;background:linear-gradient(90deg,var(--accent),#60a5fa);color:#033237;text-decoration:none
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
     <header>
-      <h1>Estudios:</h1>
+      <div class="brand">
+        <div class="logo">TN</div>
+        <div>
+          <div style="font-weight:700">Tu Nombre</div>
+          <div style="font-size:13px;color:var(--muted)">Desarrollador/a Web • Frontend</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
     </header>
-    
+
+    <section class="hero">
+      <div class="card intro">
+        <h1>Hola — soy <strong>Tu Nombre</strong></h1>
+        <p>Desarrollo interfaces limpias y accesibles. Me especializo en HTML, CSS y JavaScript moderno. Aquí tienes una selección de mi trabajo.</p>
+
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="#proyectos">Ver proyectos</a>
+          <a class="btn" href="#contacto" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);">Contactar</a>
+        </div>
+
+        <div style="margin-top:18px;color:var(--muted);font-size:14px">Disponible para trabajo remoto • Abierto a colaboraciones</div>
+      </div>
+
+      <aside class="card profile">
+        <div class="avatar">TN</div>
+        <div style="font-weight:700">Tu Nombre</div>
+        <div style="color:var(--muted)">Frontend • UI/UX • JavaScript</div>
+
+        <div class="stats">
+          <div class="stat">5 proyectos</div>
+          <div class="stat">3+ años</div>
+          <div class="stat">Freelance</div>
+        </div>
+
+        <div style="width:100%;margin-top:6px;display:flex;gap:8px;justify-content:center;">
+          <a class="btn" href="mailto:tu.email@example.com">Email</a>
+          <a class="btn" href="#" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)">CV</a>
+        </div>
+      </aside>
+    </section>
+
     <main>
-      <ol>
-        <li>Titulo de bachillerato cientifico</li>
-        <li>Titulo de lengua inglesa C1</li>
-      </ol>
+      <section id="proyectos" class="card">
+        <h2 style="margin-top:0">Proyectos</h2>
+        <div class="projects-grid">
+          <!-- Proyecto 1 -->
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Proyecto 1">
+            <h3>Landing Page Corporativa</h3>
+            <p>Landing responsive, animaciones suaves y optimizada para rendimiento.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Performance</span></div>
+          </article>
+
+          <!-- Proyecto 2 -->
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1526378728456-52b5f4b6d0c9?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Proyecto 2">
+            <h3>App SPA</h3>
+            <p>SPA con enrutado y consumo de API pública, pruebas unitarias básicas.</p>
+            <div class="tags"><span class="tag">JavaScript</span><span class="tag">SPA</span><span class="tag">API</span></div>
+          </article>
+
+          <!-- Proyecto 3 -->
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Proyecto 3">
+            <h3>Dashboard</h3>
+            <p>Dashboard con visualización de datos, filtros y componentes reutilizables.</p>
+            <div class="tags"><span class="tag">React</span><span class="tag">Charts</span><span class="tag">UX</span></div>
+          </article>
+
+          <!-- Proyecto 4 (ejemplo) -->
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Proyecto 4">
+            <h3>Tienda Online</h3>
+            <p>Frontend de e-commerce, carrito y checkout simulado.</p>
+            <div class="tags"><span class="tag">E‑commerce</span><span class="tag">Accessibility</span></div>
+          </article>
+
+          <!-- Proyecto 5 (ejemplo) -->
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Proyecto 5">
+            <h3>Microinteracciones</h3>
+            <p>Conjunto de microinteracciones y componentes CSS reutilizables.</p>
+            <div class="tags"><span class="tag">Animation</span><span class="tag">CSS</span></div>
+          </article>
+
+          <!-- Proyecto 6 (ejemplo) -->
+          <article class="project">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Proyecto 6">
+            <h3>Blog estático</h3>
+            <p>Blog con templates reutilizables y buena estructura para SEO.</p>
+            <div class="tags"><span class="tag">Static</span><span class="tag">SEO</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="sobre-mi" class="card" style="margin-top:18px">
+        <h2>Sobre mí</h2>
+        <div class="two-col">
+          <div>
+            <p>Soy desarrollador/a frontend con interés en crear experiencias accesibles y rápidas. Me encanta convertir diseños en código y optimizar la experiencia del usuario. Trabajo con HTML, CSS moderno, JavaScript y frameworks como React cuando el proyecto lo requiere.</p>
+
+            <h3 style="margin-top:12px">Habilidades</h3>
+            <div class="skills">
+              <span class="skill">HTML</span>
+              <span class="skill">CSS</span>
+              <span class="skill">JavaScript</span>
+              <span class="skill">React</span>
+              <span class="skill">WCAG</span>
+              <span class="skill">Git</span>
+            </div>
+          </div>
+
+          <aside style="align-self:start">
+            <h3>Contacto</h3>
+            <p style="color:var(--muted)">¿Quieres colaborar? Escríbeme.</p>
+            <p style="margin:6px 0 0 0">Email: <a href="mailto:tu.email@example.com" style="color:var(--accent);text-decoration:none">tu.email@example.com</a></p>
+            <p style="margin:6px 0 0 0">Ubicación: Ciudad, País</p>
+
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <a class="btn" href="#">LinkedIn</a>
+              <a class="btn" href="#">GitHub</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <footer id="contacto">
+        <div class="card" style="margin-top:18px"> 
+          <strong>¿Listo para trabajar juntos?</strong>
+          <p style="color:var(--muted)">Envíame un email o conectemos en LinkedIn.</p>
+          <div style="margin-top:12px"><a class="btn" href="mailto:tu.email@example.com">Enviar email</a></div>
+        </div>
+
+        <p style="margin-top:14px;color:var(--muted);font-size:13px">© <span id="year"></span> Tu Nombre — Hecho con ❤️</p>
+      </footer>
     </main>
-    
-    <footer></footer>
-  </body>
+  </div>
+
+  <script>
+    // JavaScript mínimo para año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
